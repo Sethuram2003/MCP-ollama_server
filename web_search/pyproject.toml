@@ -1,0 +1,14 @@
+[project]
+name = "web-search"
+version = "0.1.0"
+description = "MCP server exposing web search and page text extraction via DuckDuckGo"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.6.0",
+    "ddgs>=9.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
