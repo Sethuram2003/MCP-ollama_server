@@ -1,4 +1,6 @@
 import os
+import sys
+import io
 from typing import Optional, List
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -6,6 +8,11 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from mcp.server.fastmcp import FastMCP
+
+if sys.platform == "win32":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+    
 
 mcp = FastMCP("google_calendar")
 
@@ -356,5 +363,5 @@ async def search_events(start_time: str = None, end_time: str = None) -> str:
 
 
 if __name__ == "__main__":
-    print("📅 Google Calendar Service Starting...")
+    print("📅 Google Calendar Service Starting...", file=sys.stderr)
     mcp.run()
