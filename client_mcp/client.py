@@ -1,16 +1,19 @@
 import asyncio
 from typing import Optional
 from contextlib import AsyncExitStack
-
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
-
 import ollama
-
+import sys
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from urllib.request import urlopen
 import json
+import io
+
+if sys.platform == "win32":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 def get_current_time() -> str:
     """
@@ -49,7 +52,7 @@ class MCPClient:
         # Initialize session and client objects
         self.session: Optional[ClientSession] = None
         self.exit_stack = AsyncExitStack()
-        self.ollama_model = "llama3.2:3b-instruct-q8_0" 
+        self.ollama_model = "llama3:latest"
 
     async def connect_to_server(self, server_script_path: str):
         """Connect to an MCP server
@@ -62,7 +65,7 @@ class MCPClient:
         if not (is_python or is_js):
             raise ValueError("Server script must be a .py or .js file")
             
-        command = "python" if is_python else "node"
+        command = sys.executable if is_python else "node"
         server_params = StdioServerParameters(
             command=command,
             args=[server_script_path],
