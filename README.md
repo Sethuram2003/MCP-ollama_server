@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/sethuram2003-mcp-ollama-server-badge.png)](https://mseep.ai/app/sethuram2003-mcp-ollama-server)
+
 # 🚀 MCP-Ollama Server
 
 <div align="center">
