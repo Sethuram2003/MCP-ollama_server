@@ -5,9 +5,14 @@ import shutil
 from datetime import datetime
 from contextlib import asynccontextmanager
 from collections.abc import AsyncIterator
-
+import sys
+import io
 from mcp.server.fastmcp import FastMCP, Context, Image
 from mcp.server.fastmcp.prompts import base
+
+if sys.platform == "win32":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 # Create the MCP server
 mcp = FastMCP("File Manager", dependencies=["python-magic"])
